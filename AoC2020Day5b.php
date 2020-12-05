@@ -823,6 +823,7 @@ FBBBBBFRLR";
 $inputArray = explode("\n",$puzzleInput);
 $highestSeatID = 0;
 $seatList = array();
+$lowestSeatID = 1000;
 foreach($inputArray as $key => $value) {
 
     $rowArrayInfo = str_split($value,1);
@@ -864,14 +865,16 @@ foreach($inputArray as $key => $value) {
     if($seatID > $highestSeatID) {
         $highestSeatID = $seatID;
     }
-    $seatList[] = $seatID;
-
-
+    if($seatID < $lowestSeatID) {
+        $lowestSeatID = $seatID;
+    }
+    $seatList[] = (int)$seatID;
 }
 
-echo "<br>Highest seat ID: $highestSeatID";
+echo "<br>Highest seat ID: $highestSeatID<br><br>";
+
 $seatOptions = array();
-for ($x = 0; $x <= 1000; $x++) {
+for ($x = $lowestSeatID; $x <= $highestSeatID; $x++) {
     $seatOptions[$x] = $x;
 
 }
@@ -880,11 +883,11 @@ foreach($seatList as $key => $value) {
 
         unset($seatOptions[$value]);
 
+
+
 }
 
-var_dump($seatOptions);
-
-//501 too low
+echo "My seat is ".current($seatOptions)."<br><br>";
 
 //625 is the answer
 
