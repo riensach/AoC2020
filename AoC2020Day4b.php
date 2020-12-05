@@ -1174,9 +1174,7 @@ foreach($inputArray as $key => $value) {
         $valueInfo = $valuePieces[1];
         //echo "For passport $key found field $id with value $valueInfo<br>";
         $valueInfo = trim($valueInfo);
-        if($id=='cid') {
-            //$validCount++;
-        } elseif($id=='byr' && $valueInfo >=1920 && $valueInfo <=2002) {
+        if($id=='byr' && $valueInfo >=1920 && $valueInfo <=2002) {
             $validCount++;
         } elseif($id=='iyr' && $valueInfo >=2010 && $valueInfo <=2020) {
             $validCount++;
@@ -1197,7 +1195,6 @@ foreach($inputArray as $key => $value) {
             }
         } elseif($id=='hcl' && preg_match('/^#[0-9A-F]{6}$/i',$valueInfo)) {
             $validCount++;
-            // TO DO
         } elseif($id=='ecl' && ($valueInfo == 'amb' xor $valueInfo == 'blu' xor $valueInfo == 'brn' xor $valueInfo == 'gry' xor $valueInfo == 'grn' xor $valueInfo == 'hzl' xor $valueInfo == 'oth')) {
             $validCount++;
         } elseif($id=='pid' && strlen($valueInfo)==9) {
@@ -1205,7 +1202,7 @@ foreach($inputArray as $key => $value) {
         }
     }
     if($validCount==7) {
-        echo "Passport $key is valid<br>";
+        //echo "Passport $key is valid<br>";
         $validPassports++;
     }
 }

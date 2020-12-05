@@ -343,6 +343,7 @@ $puzzleInput = ".........#....#.###.........##.
 $inputArray = explode("\n",$puzzleInput);
 $countColumns = 0;
 $countRows = count($inputArray);
+$rowData = array();
 
 foreach($inputArray as $key => $value) {
     $rowData[$key] = new \Ds\Deque([]);
@@ -353,183 +354,38 @@ foreach($inputArray as $key => $value) {
     }
 }
 
-$treeCount = 0;
+$treeCount1 = loopInfo(1,1,$countRows,$countColumns,$rowData);
+$treeCount2 = loopInfo(1,3,$countRows,$countColumns,$rowData);
+$treeCount3 = loopInfo(1,5,$countRows,$countColumns,$rowData);
+$treeCount4 = loopInfo(1,7,$countRows,$countColumns,$rowData);
+$treeCount5 = loopInfo(2,1,$countRows,$countColumns,$rowData);
+// 2832009600
+function loopInfo($rowInc,$columnInc,$countRows,$countColumns,$rowData)
+{
+    $currentRow = 0;
+    $currentColumn = 0;
+    $treeCount = 0;
+    while ($currentRow < $countRows) {
+        // Loop until we get to the bottom
+        if ($currentColumn == ($countColumns - 1)) {
+            $currentColumn = 0;
+        } elseif ($currentColumn >= $countColumns) {
+            $currentColumn = ($currentColumn % $countColumns) + 1;
+        }
 
-$startRow = 0;
-$startColumn = 0;
-$currentRow = 0;
-$currentColumn = 0;
-$treeCount1 = $treeCount2 = $treeCount3 = $treeCount4 = $treeCount5 = 0;
-// 1 1
-while($currentRow < $countRows) {
-    // Loop until we get to the bottom
-    $sign = "r";
-    if($currentColumn==($countColumns-1)) {
-        $sign = "d";
-        $currentColumn = 0;
+        if ($rowData[$currentRow]->get($currentColumn) == '#') {
+            $treeCount++;
+        }
 
-    } elseif($currentColumn >= $countColumns) {
-        $currentColumn = ($currentColumn % $countColumns)+1;
-        $sign = "k";
+        $currentRow = $currentRow + $rowInc;
+        $currentColumn = $currentColumn + $columnInc;
     }
-    // $rowData[$currentRow]->rotate($currentColumn);
-
-
-    if($rowData[$currentRow]->get($currentColumn)=='#') {
-        $treeCount5++;
-        echo "hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       // $rowData[$currentRow]->set($currentColumn, $sign);
-    } else {
-        echo "no hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-        //$rowData[$currentRow]->set($currentColumn, $sign);
-    }
-
-    //echo $rowData[$currentRow]->first();
-    $currentRow++;
-    $currentColumn = $currentColumn + 1;
-}
-
-
-$startRow = 0;
-$startColumn = 0;
-$currentRow = 0;
-$currentColumn = 0;
-// 3 1
-while($currentRow < $countRows) {
-    // Loop until we get to the bottom
-    $sign = "r";
-    if($currentColumn==($countColumns-1)) {
-        $sign = "d";
-        $currentColumn = 0;
-
-    } elseif($currentColumn >= $countColumns) {
-        $currentColumn = ($currentColumn % $countColumns)+1;
-        $sign = "k";
-    }
-       // $rowData[$currentRow]->rotate($currentColumn);
-
-
-    if($rowData[$currentRow]->get($currentColumn)=='#') {
-        $treeCount1++;
-        echo "hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-        //$rowData[$currentRow]->set($currentColumn, $sign);
-    } else {
-        echo "no hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       // $rowData[$currentRow]->set($currentColumn, $sign);
-    }
-
-    //echo $rowData[$currentRow]->first();
-    $currentRow++;
-    $currentColumn = $currentColumn + 3;
-}
-
-$startRow = 0;
-$startColumn = 0;
-$currentRow = 0;
-$currentColumn = 0;
-// 5 1
-while($currentRow < $countRows) {
-    // Loop until we get to the bottom
-    $sign = "r";
-    if($currentColumn==($countColumns-1)) {
-        $sign = "d";
-        $currentColumn = 0;
-
-    } elseif($currentColumn >= $countColumns) {
-        $currentColumn = ($currentColumn % $countColumns)+1;
-        $sign = "k";
-    }
-    // $rowData[$currentRow]->rotate($currentColumn);
-
-
-    if($rowData[$currentRow]->get($currentColumn)=='#') {
-        $treeCount2++;
-        echo "hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       // $rowData[$currentRow]->set($currentColumn, $sign);
-    } else {
-        echo "no hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       //$rowData[$currentRow]->set($currentColumn, $sign);
-    }
-
-    //echo $rowData[$currentRow]->first();
-    $currentRow++;
-    $currentColumn = $currentColumn + 5;
-}
-
-$startRow = 0;
-$startColumn = 0;
-$currentRow = 0;
-$currentColumn = 0;
-// 7 1
-while($currentRow < $countRows) {
-    // Loop until we get to the bottom
-    $sign = "r";
-    if($currentColumn==($countColumns-1)) {
-        $sign = "d";
-        $currentColumn = 0;
-
-    } elseif($currentColumn >= $countColumns) {
-        $currentColumn = ($currentColumn % $countColumns)+1;
-        $sign = "k";
-    }
-    // $rowData[$currentRow]->rotate($currentColumn);
-
-
-    if($rowData[$currentRow]->get($currentColumn)=='#') {
-        $treeCount3++;
-        echo "hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       // $rowData[$currentRow]->set($currentColumn, $sign);
-    } else {
-        echo "no hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-        //$rowData[$currentRow]->set($currentColumn, $sign);
-    }
-
-    //echo $rowData[$currentRow]->first();
-    $currentRow++;
-    $currentColumn = $currentColumn + 7;
-}
-
-$startRow = 0;
-$startColumn = 0;
-$currentRow = 0;
-$currentColumn = 0;
-// 1 2
-while($currentRow < $countRows) {
-    // Loop until we get to the bottom
-    $sign = "r";
-    if($currentColumn==($countColumns-1)) {
-        $sign = "d";
-        $currentColumn = 0;
-
-    } elseif($currentColumn >= $countColumns) {
-        $currentColumn = ($currentColumn % $countColumns)+1;
-        $sign = "k";
-    }
-    // $rowData[$currentRow]->rotate($currentColumn);
-
-
-    if($rowData[$currentRow]->get($currentColumn)=='#') {
-        $treeCount4++;
-        echo "hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       // $rowData[$currentRow]->set($currentColumn, $sign);
-    } else {
-        echo "no hit :: $currentRow-$currentColumn :: $sign :: $countColumns<br>";
-       // $rowData[$currentRow]->set($currentColumn, $sign);
-    }
-
-    //echo $rowData[$currentRow]->first();
-    $currentRow = $currentRow + 2;
-    $currentColumn = $currentColumn + 1;
+    return $treeCount;
 }
 $treeCount = $treeCount1 * $treeCount2 * $treeCount3 * $treeCount4 * $treeCount5;
 echo "Tree Count: $treeCount1 - $treeCount2 - $treeCount3 - $treeCount4 - $treeCount5 :: $treeCount<BR><BR>";
 printGrid($rowData);
 
-// Use a deque
-// Slope: right 3, down 1
-// Count trees?
-
-// Refactor this
 
 function printGrid($trackGridInputArray) {
     echo "<code>";

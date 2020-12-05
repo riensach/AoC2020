@@ -1150,7 +1150,6 @@ $inputArray = explode("\n\r\n",$puzzleInput);
 foreach($inputArray as $key => $value) {
     $inputArray[$key] = str_replace("\n", " ", $value);
 }
-$expectedFields = array(0=>'byr',1=>'iyr',2=>'eyr',3=>'hgt',4=>'hcl',5=>'ecl',6=>'pid',7=>'cid');
 
 $validPassports = 0;
 foreach($inputArray as $key => $value) {
@@ -1169,9 +1168,6 @@ foreach($inputArray as $key => $value) {
         $validPassports++;
     }
 }
-
-//46 is wrong
-
 
 echo "Found $validPassports number of valid passports.";
 
