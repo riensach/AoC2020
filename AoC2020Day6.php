@@ -2093,5 +2093,3 @@ foreach($uniqueCountArray as $key => $value) {
 }
 
 echo "Total value: $totalCount<br>";
-
-//6782

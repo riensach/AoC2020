@@ -2106,5 +2106,3 @@ foreach($inputArray as $key => $value) {
 
 
 echo "Total value: $countYes<br>";
-
-//6782
