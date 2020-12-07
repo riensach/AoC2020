@@ -734,29 +734,23 @@ var_dump($bagArray);
 
 
 
-function containsBagCount($searchingBagName,$bagArray,$currentBagCount,$aboveBagCount):int {
+function containsBagCount($searchingBagName,$bagArray,$currentBagCount):int {
     $found = 0;
     echo "<br>Searching for $searchingBagName ($currentBagCount)<br><br>";
     foreach ($bagArray as $bagName => $bagCount) {
         if($bagName==$searchingBagName) {
             foreach ($bagCount as $bagContainsName => $bagContainsCount) {
 
-                $bagCount = containsBagCount($bagContainsName,$bagArray,$currentBagCount,$bagContainsCount);
+                $bagCount = containsBagCount($bagContainsName,$bagArray,$currentBagCount);
 
                 if($bagCount==0) {
                     // reached the bottom
                     $currentBagCount = $currentBagCount + $bagContainsCount;
                 } else {
                     $currentBagCount = $currentBagCount + ($bagCount*$bagContainsCount);
-
                 }
                 echo "$bagContainsName-$currentBagCount :: $bagCount-$bagContainsCount<br>";
-
-
-
-
             }
-            $currentBagCount += $aboveBagCount;
             return $currentBagCount;
         }
     }
@@ -765,7 +759,7 @@ function containsBagCount($searchingBagName,$bagArray,$currentBagCount,$aboveBag
 }
 
 
-$bagCount = containsBagCount('shiny gold',$bagArray,0,0);
+$bagCount = containsBagCount('shiny gold',$bagArray,0);
 
 
 echo "Valid bags total is $bagCount<br>";
