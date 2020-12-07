@@ -741,7 +741,7 @@ function containsBagCount($searchingBagName,$bagArray,$currentBagCount):int {
         if($bagName==$searchingBagName) {
             foreach ($bagCount as $bagContainsName => $bagContainsCount) {
 
-                $bagCount = containsBagCount($bagContainsName,$bagArray,$currentBagCount);
+                $bagCount = containsBagCount($bagContainsName,$bagArray,$bagContainsCount);
 
                 if($bagCount==0) {
                     // reached the bottom
