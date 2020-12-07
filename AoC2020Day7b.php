@@ -624,19 +624,19 @@ plaid green bags contain 4 dark brown bags, 1 shiny orange bag.";
 //clear yellow bags contain 2 plaid yellow bags, 4 shiny gold bags, 2 drab magenta bags, 2 bright red bags.
 //shiny gold bags contain 5 pale brown bags, 2 light red bags, 3 drab lime bags.";
 
-$puzzleInput = "shiny gold bags contain 2 dark red bags.
-dark red bags contain 2 dark orange bags.
-dark orange bags contain 2 dark yellow bags.
-dark yellow bags contain 2 dark green bags.
-dark green bags contain 2 dark blue bags.
-dark blue bags contain 2 dark violet bags.
-dark violet bags contain no other bags.";
-//
-$puzzleInput = "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
-dark olive bags contain 3 faded blue bags, 4 dotted black bags.
-vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
-faded blue bags contain no other bags.
-dotted black bags contain no other bags.";
+//$puzzleInput = "shiny gold bags contain 2 dark red bags.
+//dark red bags contain 2 dark orange bags.
+//dark orange bags contain 2 dark yellow bags.
+//dark yellow bags contain 2 dark green bags.
+//dark green bags contain 2 dark blue bags.
+//dark blue bags contain 2 dark violet bags.
+//dark violet bags contain no other bags.";
+////
+////$puzzleInput = "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+////dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+////vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+////faded blue bags contain no other bags.
+////dotted black bags contain no other bags.";
 
 
 $inputArray = explode("\n",$puzzleInput);
@@ -741,7 +741,7 @@ function containsBagCount($searchingBagName,$bagArray,$currentBagCount):int {
         if($bagName==$searchingBagName) {
             foreach ($bagCount as $bagContainsName => $bagContainsCount) {
 
-                $bagCount = containsBagCount($bagContainsName,$bagArray,$bagContainsCount);
+                $bagCount = containsBagCount($bagContainsName,$bagArray,1);
 
                 if($bagCount==0) {
                     // reached the bottom
