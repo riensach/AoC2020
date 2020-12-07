@@ -648,7 +648,6 @@ foreach($inputArray as $key => $value) {
         $bags[1] = trim($bags[1]);
         $bagColour = substr($bags[1],2);
         $bagCount = substr($bags[1],0, 1);
-        echo "$bagCount-$bagColour<br>";
         $bagsToCheck[] = array('color' => $bagColour, 'count' => $bagCount);
 
     } else {
@@ -661,7 +660,6 @@ foreach($inputArray as $key => $value) {
             $bagsToAdd = trim($bagsToAdd);
             $bagColour = substr($bagsToAdd,2);
             $bagCount = substr($bagsToAdd,0, 1);
-            echo "$bagCount-$bagColour<br>";
             $bagsToCheck[] = array('color' => $bagColour, 'count' => $bagCount);
 
         }
@@ -675,18 +673,12 @@ foreach($inputArray as $key => $value) {
 
 
 }
-var_dump($bagArray);
+
 
 $legitBags = array();
 for ($x = 0; $x <= 100; $x++) {
     foreach ($bagArray as $key => $value) {
-//        if ($key == 'shiny gold') {
-//            foreach ($value as $key2 => $value2) {
-//                if(!isset($legitBags[$key2])) {
-//                    $legitBags[$key2] = $key2;
-//                }
-//            }
-//        } else
+
         if(in_array($key, $legitBags)) {
             foreach ($value as $key2 => $value2) {
                 if(!isset($legitBags[$key2]) && $key2<>'shiny gold') {
@@ -703,7 +695,7 @@ for ($x = 0; $x <= 100; $x++) {
     }
 }
 
-var_dump($legitBags);
+
 $countBags = count($legitBags);
 echo "Valid bags total is $countBags<br>";
 

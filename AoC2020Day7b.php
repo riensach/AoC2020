@@ -716,16 +716,6 @@ for ($x = 0; $x <= 100; $x++) {
 
     }
 }
-var_dump($bagArray);
-//$currentBagCount += $value2;
-//                echo "Going to the next level for $key2 - $currentBagCount<br>";
-//                $bagCount = containsBagCount($key2,$bagArray,$currentBagCount,$value2);
-//                //$bagCount += (int)$value;
-//                $currentBagCount += ($currentBagCount*$bagCount);
-//                echo "Current bag count: $currentBagCount<br>";
-
-
-
 
 
 
@@ -735,8 +725,6 @@ var_dump($bagArray);
 
 
 function containsBagCount($searchingBagName,$bagArray,$currentBagCount):int {
-    $found = 0;
-    echo "<br>Searching for $searchingBagName ($currentBagCount)<br><br>";
     foreach ($bagArray as $bagName => $bagCount) {
         if($bagName==$searchingBagName) {
             foreach ($bagCount as $bagContainsName => $bagContainsCount) {
@@ -749,13 +737,11 @@ function containsBagCount($searchingBagName,$bagArray,$currentBagCount):int {
                 } else {
                     $currentBagCount = $currentBagCount + ($bagCount*$bagContainsCount);
                 }
-                echo "$bagContainsName-$currentBagCount :: $bagCount-$bagContainsCount<br>";
             }
             return $currentBagCount;
         }
     }
     return 0;
-
 }
 
 
@@ -763,80 +749,3 @@ $bagCount = containsBagCount('shiny gold',$bagArray,0);
 
 
 echo "Valid bags total is $bagCount<br>";
-die();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//function containsBagCount($bagName,$bagArray,$currentBagCount,$aboveBagCount) {
-//    $found = 0;
-//    foreach ($bagArray as $key => $value) {
-//        if($key==$bagName) {
-//            $found = 1;
-//            echo "<br>Found a bag matching $bagName - adding $aboveBagCount to bag count and now looking for children<br>";
-//            $currentBagCount += $aboveBagCount;
-//            echo "Current count: $currentBagCount<br>";
-//            foreach ($value as $key2 => $value2) {
-//                echo "<br>Bag $bagName has a child - $key2 with $value2 bags<br>";// - adding the bags and looking for children<br>";
-//                //$currentBagCount += $value2;
-//
-//                $bagCount = containsBagCount($key2,$bagArray,$currentBagCount,$value2);
-//
-//                if($bagCount == 0) {
-//                    $currentBagCount += ($aboveBagCount*$value2);
-//                } else {
-//                    $currentBagCount = $bagCount;
-//                }
-//
-//
-//                echo "Current count: $currentBagCount<br>";
-//
-//
-//
-//
-//
-//            }
-//            echo "<strong>$key returned $currentBagCount</strong><br>";
-//            return $currentBagCount;
-//        }
-//    }
-//    echo "No children of $bagName found, so returning 0<br>";
-//    return 0;
-//
-//}
-//
-//$bagCount = containsBagCount('shiny gold',$bagArray,0,0);
-//
-//
-//echo "Valid bags total is $bagCount<br>";
-//
-//2 is wrong
