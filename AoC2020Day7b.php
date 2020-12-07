@@ -734,23 +734,23 @@ var_dump($bagArray);
 
 
 
-function containsBagCount($bagName,$bagArray,$currentBagCount,$aboveBagCount):int {
+function containsBagCount($searchingBagName,$bagArray,$currentBagCount,$aboveBagCount):int {
     $found = 0;
-    echo "<br>Searching for $bagName ($currentBagCount)<br><br>";
-    foreach ($bagArray as $key => $value) {
-        if($key==$bagName) {
-            foreach ($value as $key2 => $value2) {
+    echo "<br>Searching for $searchingBagName ($currentBagCount)<br><br>";
+    foreach ($bagArray as $bagName => $bagCount) {
+        if($bagName==$searchingBagName) {
+            foreach ($bagCount as $bagContainsName => $bagContainsCount) {
 
-                $bagCount = containsBagCount($key2,$bagArray,$currentBagCount,$value2);
+                $bagCount = containsBagCount($bagContainsName,$bagArray,$currentBagCount,$bagContainsCount);
 
                 if($bagCount==0) {
                     // reached the bottom
-                    $currentBagCount = $currentBagCount + $value2;
+                    $currentBagCount = $currentBagCount + $bagContainsCount;
                 } else {
-                    $currentBagCount = $currentBagCount + ($bagCount*$value2);
+                    $currentBagCount = $currentBagCount + ($bagCount*$bagContainsCount);
 
                 }
-                echo "$key2-$currentBagCount :: $bagCount-$value2<br>";
+                echo "$bagContainsName-$currentBagCount :: $bagCount-$bagContainsCount<br>";
 
 
 
