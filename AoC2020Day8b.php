@@ -617,64 +617,73 @@ jmp +1";
 //jmp -4
 //acc +6";
 
+$time_pre = microtime(true);
 
 
 $inputArray = explode("\n",$puzzleInput);
-$accumulatorValue = 0;
-$instructionValue = 0;
-$usedArguments = array();
+
+// Create Instructions Array
 $instructions = array();
 foreach($inputArray as $key => $value) {
     $operation = trim(substr($value, 0, 3));
     $argument = trim(substr($value, 4));
     $instructions[] = array('operation' => $operation, 'argument' => $argument);
 }
-$instructionCount = count($instructions);
+
+// Initiate processor with base instructions
+$accumulatorValue = 0;
+$instructionValue = 0;
+$processor = new processBootCode($accumulatorValue, $instructions, $instructionValue);
+
+// Loop through instructions, changing one instruction at a time and processing the information to see if it boots
 $iteration = 0;
+$instructionCount = count($instructions);
 while($iteration < $instructionCount) {
     $changedInstructions = $instructions;
     if($changedInstructions[$iteration]['operation'] == 'nop') {
+        // Change a nop to a jmp
         $changedInstructions[$iteration]['operation'] = 'jmp';
-        echo "Changed instruction ID $iteration from a nop to a jmp<br>";
     } elseif($changedInstructions[$iteration]['operation'] == 'jmp') {
+        // Change a jmp to a nop
         $changedInstructions[$iteration]['operation'] = 'nop';
-        echo "Changed instruction ID $iteration from a jmp to a nop<br>";
     } else {
-        // Not the right thing to change
         $iteration++;
         continue;
     }
-
-    $processor = new processCode($accumulatorValue, $changedInstructions, $instructionValue);
-    while ($processor->usedArgument === false) {
-        //echo "keep processing";
+    // Reset processor with the new instructions
+    $processor->resetProcessor($accumulatorValue, $changedInstructions, $instructionValue);
+    // Iterate through until an argument is repeated
+    while ($processor->getUsedArgument() === false && $processor->getTerminatedValue() === false) {
         $processor->processInput();
     }
-    if ($processor->terminated === true) {
+    // Check to see if we've finished all the arguments
+    if ($processor->getTerminatedValue() === true) {
         // It finished! Success!
         echo "FINISHED - changed the operation ID $iteration<br>";
         break;
     }
-
+    // We've not finished all the arguments, increase the iterator used to modify the next instruction from the base instructions and start again
     $iteration++;
 }
 
-
+// If we've got here, we've found the solution
 $accumulatorValue = $processor->getAccumulatorValue();
-
 echo "The value before the second execution is $accumulatorValue";
 
+// Time stuff
+$time_post = microtime(true);
+$exec_time = $time_post - $time_pre;
+echo "<br>Spent $exec_time seconds so far<br>";
 
 
 
-class processCode
+class processBootCode
 {
-    public $operation;
-    public $instructionID;
-    public $accumulatorValue;
-    public $instructions;
-    public $usedArgument = false;
-    public $terminated = false;
+    private $instructionID;
+    private $accumulatorValue;
+    private $instructions;
+    private $usedArgument = false;
+    private $terminated = false;
     private $argumentHistory;
 
     function __construct($accumulatorValue, $instructions, $instructionID) {
@@ -685,12 +694,27 @@ class processCode
 
     }
 
-    function getAccumulatorValue() {
+    function resetProcessor($accumulatorValue, $instructions, $instructionID) {
+
+        $this->accumulatorValue = $accumulatorValue;
+        $this->instructions = $instructions;
+        $this->instructionID = $instructionID;
+        $this->usedArgument = false;
+        $this->terminated = false;
+        $this->argumentHistory = null;
+
+    }
+
+    function getAccumulatorValue():int {
         return $this->accumulatorValue;
     }
 
-    function getTerminatedValue() {
+    function getTerminatedValue():bool {
         return $this->terminated;
+    }
+
+    function getUsedArgument():bool {
+        return $this->usedArgument;
     }
 
     function checkUsedArgument($checkValue):bool {
@@ -703,11 +727,14 @@ class processCode
     }
 
     function processInput() {
+
+        // Check we've not gone past the last instruction - if we have, we've completed the boot so we need to say we've terminated
         if($this->instructionID >= count($this->instructions)) {
             $this->terminated = true;
-            $this->usedArgument = true;
             return;
         }
+
+        // We assign the starting information to local variables
         $operation = $this->instructions[$this->instructionID]['operation'];
         $argument = $this->instructions[$this->instructionID]['argument'];
         if($this->checkUsedArgument($this->instructionID)===true) {
@@ -724,13 +751,11 @@ class processCode
         } elseif($operation == 'jmp') {
             $this->instructionID += $argument;
             if($argument=="+0") {
-                //echo "stuck in a loop";
                 $this->usedArgument = true;
-                //die();
                 return;
             }
-
         }
+
     }
 
 }
