@@ -1026,12 +1026,10 @@ $preCount = 25;
 
 $time_pre = microtime(true);
 
-
 $inputArray = explode("\n",$puzzleInput);
 $arrayInitial = array();
 $foundValue =0;
 foreach($inputArray as $key => $value) {
-    //echo "$value<br>";
     if($key < $preCount) {
         $arrayInitial[] = (int)$value;
         continue;
@@ -1046,36 +1044,35 @@ foreach($inputArray as $key => $value) {
     }
     $arrayInitial[] = (int)$value;
     array_shift($arrayInitial);
-    //var_dump($arrayInitial);
 
-    $foundValue = $value;
+    $foundValue = (int)$value;
     if($found == 0) {
-        echo "The first number not found to be a combination of the preamble is $foundValue";
+        echo "The first number not found to be a combination of the preamble is $foundValue<br><br>";
         break;
     }
 
 }
-
+$foundArray = array();
 foreach($inputArray as $key => $value) {
     $currentCount = 0;
     $currentCount = (int)$value;
     $foundArray = array();
-    $foundArray[] = $inputArray[$key];
+    $foundArray[] = (int)$inputArray[$key];
     $arrayID = $key+1;
     while($currentCount < $foundValue) {
-        $foundArray[] = $inputArray[$arrayID];
+        $foundArray[] = (int)$inputArray[$arrayID];
         $currentCount += (int)$inputArray[$arrayID];
         $arrayID++;
     }
-    if($currentCount == $foundValue) {
-        echo "<br>Found the repeat<br>";
+    if($currentCount === $foundValue) {
+        // Found the first repeating sequence, time to exit
         break;
     }
 
 }
-asort($foundArray);
-var_dump($foundArray);
-$totalCount = (int)$foundArray[0] + (int)end($foundArray);
+
+
+$totalCount = max($foundArray) + min($foundArray);
 
 
 echo "Final answer is $totalCount<br>";
