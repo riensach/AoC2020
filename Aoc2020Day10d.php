@@ -202,16 +202,6 @@ $adapterSequences[] = $adapterSequence;
 var_dump($adapterSequences);
 
 
-
-
-
-
-
-
-
-
-
-
 $combinations = 1;
 foreach ($adapterSequences as $adapterSequence) {
     if (count($adapterSequence) === 3) {
