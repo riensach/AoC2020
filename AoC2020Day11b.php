@@ -136,10 +136,12 @@ foreach($inputArray as $key => $value) {
 // L = empty seat
 
 $iterator = 0;
-$lastSeatCount = 0;
 while($iterator < 1000) {
     $newSeatArray = $seatArray;
     foreach($seatArray as $seatRowKey => $seatRowValue) {
+        $seatColumnIterator = 0;
+        $seatRowIterator = 0;
+
         foreach ($seatRowValue as $seatColumnKey => $seatValue) {
 
             $seatLeft = $seatArray[$seatRowKey][$seatColumnKey-1] ?? -1;
@@ -225,16 +227,24 @@ while($iterator < 1000) {
             }
         }
     }
-    $seatArray = $newSeatArray;
-    $iterator++;
-//    echo "Round $iterator:<br>";
-//    printGrid($seatArray);
-//    echo "<br>";
-    $occupiedSeatCount = occupiedSeatCount($seatArray);
-    if($occupiedSeatCount == $lastSeatCount) {
+    if($seatArray == $newSeatArray) {
         break;
     }
-    $lastSeatCount = $occupiedSeatCount;
+    $seatArray = $newSeatArray;
+    $iterator++;
+    echo "Round $iterator ";
+    $time_post = microtime(true);
+    $exec_time = $time_post - $time_pre;
+    echo "Spent $exec_time seconds so far<br>";
+
+//    printGrid($seatArray);
+//    echo "<br>";
+
+//    $occupiedSeatCount = occupiedSeatCount($seatArray);
+//    if($occupiedSeatCount == $lastSeatCount) {
+//        break;
+//    }
+//    $lastSeatCount = $occupiedSeatCount;
 }
 function occupiedSeatCount($seatArray):int
 {
