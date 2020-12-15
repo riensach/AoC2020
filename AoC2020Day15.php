@@ -25,18 +25,11 @@ while($iterator < 30000001) {
         // First time it was spoken, so say 0
         $valueToSpeak = 0;
     } else {
-        // Need to find when it was previously spoken
-        //$tempArray = $lastNumbersSpoken;
-       // array_pop($tempArray);
-        //$tempArray = array_reverse($tempArray,true);
         $lastTimeSpokenArray = explode(",",$spokenNumbersLastTime[$lastNumberSpoken]);
         $lastTimeSpoken = $lastTimeSpokenArray[2];
         if($lastTimeSpokenArray[2]==$iterator) {
             $lastTimeSpoken = $lastTimeSpokenArray[0];
         }
-        //var_dump($lastNumbersSpoken);
-        //var_dump($tempArray);
-        //echo "Last time spoken for $lastNumberSpoken is $lastTimeSpoken, and we're currently on play $iterator<br>";
         $valueToSpeak = ($iterator) - ($lastTimeSpoken);
     }
 
@@ -68,19 +61,13 @@ while($iterator < 30000001) {
     }
 
 }
-//var_dump($spokenNumbersLastTime);
+
 $numSpoken = $lastNumbersSpoken2020;
 echo "The 2020th number spoken is $numSpoken<br>";
 $numSpoken = $lastNumbersSpoken30000000;
 echo "The 30000000th number spoken is $numSpoken<br>";
 
-// 10000000
-// 30000000
-
-
 // Time stuff
 $time_post = microtime(true);
 $exec_time = $time_post - $time_pre;
 echo "<br>Spent $exec_time seconds so far<br>";
-
-// too high 1356
