@@ -386,6 +386,7 @@ $puzzleInput = "9 + 2 * ((7 + 9 + 5 + 7) * 3 + (5 * 3 * 6 * 5 + 6) + (9 * 4 + 9 
 
 //$puzzleInput = "1 + (2 * 3) + (4 * (5 + 6))";
 //$puzzleInput = "1 + 2 * 3 + 4 * 5 + 6";
+//$puzzleInput = "2 + (3 + (4 + (5 + (6 + (7 + (8 + (9 * 10)))))))";
 
 $inputArray = explode("\n",$puzzleInput);
 //error_reporting(0);
@@ -418,13 +419,7 @@ function calculateValue($inputExpression):int {
         $findOpenningBracket = strrpos($inputExpression, '(', -$searchPosition);
         $length = $findEndingBracket - $findOpenningBracket;
         $subString = substr($inputExpression,$findOpenningBracket+1,$length-1);
-       // echo $subString . " - $findOpenningBracket - $findEndingBracket";
-
-
-
-
-
-
+        //echo $subString . "<br>";
 
         $subString = splitInput($subString);
         $calculationResult = doCalculation($subString);
@@ -439,7 +434,7 @@ function calculateValue($inputExpression):int {
 }
 
 function splitInput($calculation):string {
-//echo "sent $calculation - ";
+//echo "sent $calculation<br>";
     $input = explode('*', $calculation);
     $currentResult = '';
     foreach($input as $key => $value) {
@@ -456,7 +451,7 @@ function splitInput($calculation):string {
 
 
 function doCalculation($calculation):int {
-
+   // echo "Calculating $calculation<br>";
     $calculation = str_replace(' ', '', $calculation);
     $pattern='@([-/+\*])@';
     $patternArray=preg_split( $pattern, preg_replace( '@\s@', '', $calculation ), -1, PREG_SPLIT_DELIM_CAPTURE );
