@@ -70,9 +70,11 @@ $puzzleInput2 = "1
 //$puzzleInput2 = "2
 //29
 //14";
-
+$time_pre = microtime(true);
 $player1Deck = explode("\n",$puzzleInput1);
 $player2Deck = explode("\n",$puzzleInput2);
+//$player1Deck = array_map(‘intval’, $player1Deck);
+//$player2Deck = array_map(‘intval’, $player2Deck);
 foreach($player1Deck as $key => $value) {
     $player1Deck[$key] = (int)$value;
 }
@@ -173,3 +175,8 @@ function calculateScore($cardDeck) {
 }
 
 echo "The game ended. The winning score is $winningScore.<br>";
+
+// Time stuff
+$time_post = microtime(true);
+$exec_time = $time_post - $time_pre;
+echo "<br><br>Spent $exec_time seconds so far<br>";
