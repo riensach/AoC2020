@@ -6,14 +6,12 @@ $input = 389125467;
 
 $time_pre = microtime(true);
 
-$cards = new \Ds\Deque([]);
-$cardsLocation = new \Ds\Deque([]);
+$cards = new \Ds\Map([]);
 
 $inputArray = str_split($input, 1);
 
 foreach($inputArray as $key => $value) {
     $cards->push((int)$value);
-    //$cardsLocation->set((int)$value,(int)$value);
 }
 for ($x = 10; $x < 1000001; $x++) {
     $cards->push($x);
@@ -50,29 +48,27 @@ while($moveCount < 10000001) {
             $destinationCup = 1000000;
         }
     }
-    $cards->rotate(1);
-    $cards->shift();
-    $cards->shift();
-    $cards->shift();
-    $cards->rotate(-1);
-//    if($cardsLocation->get($destinationCup) >= $destinationCup) {
-//        $destinationPosition = $cardsLocation->get($destinationCup);
-//    } else {
-//        $destinationPosition = $cardsLocation->set($destinationCup,$destinationCup);
-//        $destinationPosition = $destinationCup;
-//    }
+    $cards->remove($cupPickup1Value,$cupPickup2Value,$cupPickup3Value);
+    for ($x = 1; $x < 1000001; $x++) {
+
+        if($cards->get($x) == $destinationCup) {
+            $destinationPosition = $x;
+            break;
+        }
+    }
     $destinationPosition = $cards->find($destinationCup);
     //$finalCupPositions = implode('', $cards->toArray());
     //echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
     //$rotateValue = $destinationPosition - 2;
     //if($rotateValue < 0) $rotateValue = 0;
-    $cards->rotate($destinationPosition+1);
+    //$cards->rotate($destinationPosition+1);
     //$finalCupPositions = implode('', $cards->toArray());
    // echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
-    $cards->unshift($cupPickup3Value);
-    $cards->unshift($cupPickup2Value);
-    $cards->unshift($cupPickup1Value);
-    $cards->rotate(-1);
+    //$cards->unshift($cupPickup3Value);
+    //$cards->unshift($cupPickup2Value);
+    //$cards->unshift($cupPickup1Value);
+    //$cards->rotate(-1);
+    $cards->add($cupPickup1Value,$cupPickup2Value,$cupPickup3Value);
     //$finalCupPositions = implode('', $cards->toArray());
     //echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
    // $rotateValue = -3;

@@ -3,7 +3,7 @@
 $input = 193467258;
 
 //$input = 389125467;
-
+$time_pre = microtime(true);
 $cards = new \Ds\Deque([]);
 
 $inputArray = str_split($input, 1);
@@ -77,3 +77,8 @@ $cards->remove(0);
 $finalCupPositions = implode('', $cards->toArray());
 
 echo "After 100 moves, the cups are arranged after 1 as follows: $finalCupPositions";
+
+// Time stuff
+$time_post = microtime(true);
+$exec_time = $time_post - $time_pre;
+echo "<br><br>Spent $exec_time seconds so far<br>";

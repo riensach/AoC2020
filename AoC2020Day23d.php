@@ -3,32 +3,27 @@
 $input = 193467258;
 
 $input = 389125467;
-
 $time_pre = microtime(true);
-
 $cards = new \Ds\Deque([]);
-$cardsLocation = new \Ds\Deque([]);
 
 $inputArray = str_split($input, 1);
 
 foreach($inputArray as $key => $value) {
     $cards->push((int)$value);
-    //$cardsLocation->set((int)$value,(int)$value);
 }
 for ($x = 10; $x < 1000001; $x++) {
     $cards->push($x);
 }
+
 //var_dump($cards->toArray());
 
+$moveCount = 1;
+$finalCupPositions = implode('', $cards->toArray());
+//echo "Start: $finalCupPositions<br>";
 // Time stuff
 $time_post = microtime(true);
 $exec_time = $time_post - $time_pre;
-echo "<br><br>Spent $exec_time seconds so far<br>";
-
-
-$moveCount = 1;
-//$finalCupPositions = implode('', $cards->toArray());
-//echo "Start: $finalCupPositions<br>";
+echo "<br><br>Spent $exec_time seconds so far<br>\n";
 while($moveCount < 10000001) {
 
     $currentValue = $cards->first();
@@ -55,53 +50,55 @@ while($moveCount < 10000001) {
     $cards->shift();
     $cards->shift();
     $cards->rotate(-1);
-//    if($cardsLocation->get($destinationCup) >= $destinationCup) {
-//        $destinationPosition = $cardsLocation->get($destinationCup);
-//    } else {
-//        $destinationPosition = $cardsLocation->set($destinationCup,$destinationCup);
-//        $destinationPosition = $destinationCup;
-//    }
+
     $destinationPosition = $cards->find($destinationCup);
-    //$finalCupPositions = implode('', $cards->toArray());
-    //echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
-    //$rotateValue = $destinationPosition - 2;
-    //if($rotateValue < 0) $rotateValue = 0;
+
+
+
+
+
+
+    $finalCupPositions = implode('', $cards->toArray());
     $cards->rotate($destinationPosition+1);
-    //$finalCupPositions = implode('', $cards->toArray());
-   // echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
+    $finalCupPositions = implode('', $cards->toArray());
     $cards->unshift($cupPickup3Value);
     $cards->unshift($cupPickup2Value);
     $cards->unshift($cupPickup1Value);
     $cards->rotate(-1);
-    //$finalCupPositions = implode('', $cards->toArray());
-    //echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
-   // $rotateValue = -3;
+    $finalCupPositions = implode('', $cards->toArray());
     $cards->rotate(-$destinationPosition + 1);
-    //$cards->remove($destinationPosition);
-    //$cards->rotate(1);
-   // $cards->unshift($destinationCup);
-    //$finalCupPositions = implode('', $cards->toArray());
-    //echo "$destinationCup - $destinationPosition :: $finalCupPositions<br>";
+    $finalCupPositions = implode('', $cards->toArray());
+
 
     // Time stuff
     if($moveCount % 10000 == 0) {
         $time_post = microtime(true);
         $exec_time = $time_post - $time_pre;
-        echo "<br>Spent $exec_time seconds so far for iteration $moveCount<br>";
+        echo "<br>Spent $exec_time seconds so far for iteration $moveCount<br>\n";
         //ob_flush();
         //flush();
     }
     $moveCount++;
 }
+
 $destinationPosition = $cards->find(1);
 $cards->rotate($destinationPosition);
+$cards->remove(0);
+$finalCupPositions = implode('', $cards->toArray());
+
+echo "After 10000001 moves, the cups are arranged after 1 as follows: $finalCupPositions\n";
+
+
+
+$destinationPosition = $cards->find(1);
+$cards->rotate($destinationPosition+1);
 $value1 = $cards->shift();
 $value2 = $cards->shift();
 
 $finalValue = $value1 * $value2;
 
 
-echo "After 10000001 moves, the final value is : $finalValue";
+echo "After 10000001 moves, the final value is : $finalValue ($value1 * $value2)\n";
 
 // Time stuff
 $time_post = microtime(true);
